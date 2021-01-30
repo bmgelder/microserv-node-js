@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CommentCreate from './CommentCreate';
-import CommentList from './CommentList';
+import CommentCreate from "./CommentCreate";
+import CommentList from "./CommentList";
 
 export default function PostList() {
   const [posts, setPosts] = useState({});
 
   const fetchPosts = async () => {
-    const res = await axios.get("http://localhost:4002/posts");
-    console.log(res.data);
-    setPosts(res.data);
+    await axios
+      .get("http://localhost:4002/posts", Event)
+      .then((res) => {
+        console.log(res.data);
+        setPosts(res.data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   useEffect(() => {
@@ -32,7 +38,9 @@ export default function PostList() {
     );
   });
 
-  return <div className="d-flex flex-row flex-wrap justify-content-between" >
+  return (
+    <div className="d-flex flex-row flex-wrap justify-content-between">
       {renderedPosts}
-  </div>;
+    </div>
+  );
 }
