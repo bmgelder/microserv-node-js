@@ -1,1 +1,3 @@
 node_modules
+auth/src/test
+auth/src/routes/__test__
