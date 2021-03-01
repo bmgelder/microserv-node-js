@@ -5,6 +5,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/use-regex: 'true'
+    nginx.ingress.kubernetes.io/hsts: 'false'
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
 spec:
   rules:
     - host: ticketing.dev
@@ -17,3 +19,19 @@ spec:
                 name: auth-srv
                 port:
                   number: 3000
+          - path: /?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ingress-nginx-controller-admission
+  namespace: kube-system
+data:
+  hsts: 'false'
+  ssl-redirect: 'false'

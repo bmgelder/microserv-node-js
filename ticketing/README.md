@@ -11,4 +11,9 @@ kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
 
 npm install --save-dev @types/jest @types/supertest jest ts-jest supertest mongodb-memory-server
 
+curl -s -D header.txt --insecure http://ticketing.de
+
+npm install react react-dom next
+npm install bootstrap
+
 skaffold dev
