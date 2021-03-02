@@ -10,7 +10,6 @@ export default function AppComponent({ Component, pageProps }) {
   useEffect(async () => {
     const { data } = await axios.get('/api/users/currentuser');
     setCurrentUser(data.currentUser);
-    console.log('useEffect');
   }, [Component]);
 
   return (
