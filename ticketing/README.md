@@ -7,6 +7,9 @@ npm install mongoose
 npm install @types/mongoose
 npm install cookie-session @types/cookie-session
 npm install jsonwebtoken @types/jsonwebtoken
+npm install mongoose-update-if-current
+
+minikube addons enable ingress
 kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
 
 npm install --save-dev @types/jest @types/supertest jest ts-jest supertest mongodb-memory-server
