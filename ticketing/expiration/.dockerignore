@@ -1,0 +1,3 @@
+node_modules
+tickets/src/test
+tickets/src/routes/__test__
