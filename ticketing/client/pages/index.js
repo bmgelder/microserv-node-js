@@ -1,14 +1,46 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Link from 'next/link';
 // import https from 'https';
 
 export default function LandingPage(props) {
   const { currentUser } = props;
 
-  return currentUser ? (
-    <h1>You are signed in</h1>
-  ) : (
-    <h1> You are NOT signed in</h1>
+  const [tickets, setTickets] = useState([]);
+
+  const ticketList = tickets.map((ticket) => {
+    return (
+      <tr key={ticket.id}>
+        <td>{ticket.title}</td>
+        <td>{ticket.price}</td>
+        <td>
+          <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+            <a>View</a>
+          </Link>
+        </td>
+      </tr>
+    );
+  });
+
+  useEffect(async () => {
+    const { data } = await axios.get('/api/tickets');
+    setTickets(data);
+  }, []);
+
+  return (
+    <div>
+      <h1>Tickets</h1>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>{ticketList}</tbody>
+      </table>
+    </div>
   );
 }
 
@@ -22,7 +54,7 @@ export default function LandingPage(props) {
 //       rejectUnauthorized: false,
 //     });
 //     const { data } = await axios.get(
-//       'https://ingress-nginx-controller-admission.kube-system.svc.cluster.local/api/users/currentuser',
+//       'https://ingress-nginx-controller-admission.kube-system.svc.cluster.local/api/tickets',
 //       {
 //         httpsAgent: agent,
 //         headers: req.headers,
@@ -32,7 +64,7 @@ export default function LandingPage(props) {
 //   } else {
 //     // we are on the browser
 //     // requests can be made with a base url of ''
-//     const { data } = await axios.get('/api/users/currentuser');
+//     const { data } = await axios.get('/api/tickets');
 //     return data;
 //   }
 // };
